@@ -78,11 +78,18 @@ router.get('/:classId/students', async (req, res) => {
     if (!cls) return res.status(404).json({ message: 'Class not found.' });
 
     const attempts = cls.quizId
-      ? await Attempt.find({ classId: cls._id, quizId: cls.quizId }).lean()
+      ? await Attempt.find({ classId: cls._id, quizId: cls.quizId }).sort({ createdAt: 1 }).lean()
       : [];
 
+    // Priority: submitted/force_submitted beats in_progress beats anything else
+    const STATUS_PRIORITY = { submitted: 2, force_submitted: 2, in_progress: 1 };
     const attemptMap = {};
-    attempts.forEach(a => { attemptMap[a.studentId.toString()] = a; });
+    attempts.forEach(a => {
+      const existing = attemptMap[a.studentId.toString()];
+      const newPriority = STATUS_PRIORITY[a.status] || 0;
+      const existingPriority = existing ? (STATUS_PRIORITY[existing.status] || 0) : -1;
+      if (newPriority >= existingPriority) attemptMap[a.studentId.toString()] = a;
+    });
 
     const students = cls.students.map(s => ({
       ...s.toObject(),
@@ -202,10 +209,17 @@ router.get('/:classId/students/export', async (req, res) => {
     if (!cls) return res.status(404).json({ message: 'Class not found.' });
 
     const attempts = cls.quizId
-      ? await Attempt.find({ classId: cls._id, quizId: cls.quizId }).lean()
+      ? await Attempt.find({ classId: cls._id, quizId: cls.quizId }).sort({ createdAt: 1 }).lean()
       : [];
+    // Priority: submitted/force_submitted beats in_progress beats anything else
+    const STATUS_PRIORITY = { submitted: 2, force_submitted: 2, in_progress: 1 };
     const attemptMap = {};
-    attempts.forEach(a => { attemptMap[a.studentId.toString()] = a; });
+    attempts.forEach(a => {
+      const existing = attemptMap[a.studentId.toString()];
+      const newPriority = STATUS_PRIORITY[a.status] || 0;
+      const existingPriority = existing ? (STATUS_PRIORITY[existing.status] || 0) : -1;
+      if (newPriority >= existingPriority) attemptMap[a.studentId.toString()] = a;
+    });
 
     const rows = cls.students.map(s => {
       const attempt = attemptMap[s._id.toString()];
@@ -237,23 +251,11 @@ router.post('/:classId/students/:studentId/reset-attempt', async (req, res) => {
     const cls = await Class.findOne({ _id: req.params.classId, teacherId: req.user.id });
     if (!cls) return res.status(404).json({ message: 'Class not found.' });
 
-    const attempt = await Attempt.findOne({
+    // Hard delete all existing attempts for this student/quiz to ensure a completely clean slate
+    await Attempt.deleteMany({
       studentId: req.params.studentId,
       classId: cls._id,
     });
-    if (!attempt) return res.status(404).json({ message: 'No attempt found for this student.' });
-
-    attempt.status = 'not_started';
-    attempt.answers = [];
-    attempt.score = 0;
-    attempt.totalMarks = 0;
-    attempt.percentage = 0;
-    attempt.violationCount = 0;
-    attempt.startedAt = null;
-    attempt.submittedAt = null;
-    attempt.resetBy = req.user.id;
-    attempt.resetAt = new Date();
-    await attempt.save();
 
     res.json({ message: 'Attempt reset successfully.' });
   } catch { res.status(500).json({ message: 'Server error.' }); }

@@ -172,7 +172,7 @@ router.get('/result', async (req, res) => {
       studentId: req.user.id,
       quizId: cls.quizId,
       status: { $in: ['submitted', 'force_submitted'] },
-    }).lean();
+    }).sort({ createdAt: -1 }).lean();
     if (!attempt) return res.status(404).json({ message: 'No completed attempt found.' });
 
     // Get all questions with correct answers for review
