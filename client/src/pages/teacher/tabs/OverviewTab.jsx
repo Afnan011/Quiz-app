@@ -5,6 +5,7 @@ import useAuthStore from '../../../store/authStore';
 export default function OverviewTab({ classData, onRefresh }) {
   const quiz = classData?.quizId;
   const [toggling, setToggling] = useState(false);
+  const [publishing, setPublishing] = useState(false);
 
   const handleToggleQuiz = async () => {
     if (!quiz?._id) return;
@@ -14,6 +15,17 @@ export default function OverviewTab({ classData, onRefresh }) {
       onRefresh();
     } finally {
       setToggling(false);
+    }
+  };
+
+  const handlePublishResults = async () => {
+    if (!quiz?._id) return;
+    setPublishing(true);
+    try {
+      await api.put(`/quiz/${quiz._id}/publish-results`);
+      onRefresh();
+    } finally {
+      setPublishing(false);
     }
   };
 
@@ -31,6 +43,7 @@ export default function OverviewTab({ classData, onRefresh }) {
         <div className="bg-white border border-slate-200 rounded-2xl p-6">
           <div className="flex items-center justify-between mb-4">
             <h3 className="font-semibold text-slate-900">Quiz Configuration</h3>
+          <div className="flex items-center gap-2">
             <button
               onClick={handleToggleQuiz}
               disabled={toggling}
@@ -42,6 +55,18 @@ export default function OverviewTab({ classData, onRefresh }) {
             >
               {toggling ? '…' : quiz.isActive ? 'Deactivate Quiz' : 'Activate Quiz'}
             </button>
+            <button
+              onClick={handlePublishResults}
+              disabled={publishing}
+              className={`px-4 py-2 text-sm font-semibold rounded-xl transition ${
+                quiz.resultsPublished
+                  ? 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                  : 'bg-indigo-50 text-indigo-600 hover:bg-indigo-100'
+              }`}
+            >
+              {publishing ? '…' : quiz.resultsPublished ? '🔒 Unpublish Results' : '📢 Publish Results'}
+            </button>
+          </div>
           </div>
           <div className="grid sm:grid-cols-2 gap-4 text-sm">
             <InfoRow label="Title" value={quiz.title} />

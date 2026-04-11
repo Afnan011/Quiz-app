@@ -1,0 +1,122 @@
+[
+  {
+    "text": "What is data modeling?",
+    "type": "single",
+    "options": [
+      { "label": "A", "text": "Writing SQL queries" },
+      { "label": "B", "text": "Designing a visual representation of a database system" },
+      { "label": "C", "text": "Creating software applications" },
+      { "label": "D", "text": "Installing database software" }
+    ],
+    "correctOptions": ["B"],
+    "marks": 1
+  },
+  {
+    "text": "Data modeling helps in reducing:",
+    "type": "single",
+    "options": [
+      { "label": "A", "text": "Storage devices" },
+      { "label": "B", "text": "Network cables" },
+      { "label": "C", "text": "Programming languages" },
+      { "label": "D", "text": "Redundancy" }
+    ],
+    "correctOptions": ["D"],
+    "marks": 1
+  },
+  {
+    "text": "Which of the following is NOT a requirement of data modeling?",
+    "type": "single",
+    "options": [
+      { "label": "A", "text": "Accuracy" },
+      { "label": "B", "text": "Consistency" },
+      { "label": "C", "text": "Animation" },
+      { "label": "D", "text": "Flexibility" }
+    ],
+    "correctOptions": ["C"],
+    "marks": 1
+  },
+  {
+    "text": "Consistency ensures:",
+    "type": "single",
+    "options": [
+      { "label": "A", "text": "Uniformity across the system" },
+      { "label": "B", "text": "More storage space" },
+      { "label": "C", "text": "Faster hardware" },
+      { "label": "D", "text": "Automatic backups" }
+    ],
+    "correctOptions": ["A"],
+    "marks": 1
+  },
+  {
+    "text": "Flexibility in a data model means:",
+    "type": "single",
+    "options": [
+      { "label": "A", "text": "It cannot be modified" },
+      { "label": "B", "text": "It adapts to future changes" },
+      { "label": "C", "text": "It deletes old data" },
+      { "label": "D", "text": "It reduces users" }
+    ],
+    "correctOptions": ["B"],
+    "marks": 1
+  },
+  {
+    "text": "Which tool supports conceptual, logical, and physical data models?",
+    "type": "single",
+    "options": [
+      { "label": "A", "text": "Lucidchart" },
+      { "label": "B", "text": "ER/Studio" },
+      { "label": "C", "text": "Notepad" },
+      { "label": "D", "text": "MS Paint" }
+    ],
+    "correctOptions": ["B"],
+    "marks": 1
+  },
+  {
+    "text": "Lucidchart is:",
+    "type": "single",
+    "options": [
+      { "label": "A", "text": "Desktop-only software" },
+      { "label": "B", "text": "Cloud-based diagramming tool" },
+      { "label": "C", "text": "Antivirus software" },
+      { "label": "D", "text": "Compiler" }
+    ],
+    "correctOptions": ["B"],
+    "marks": 1
+  },
+  {
+    "text": "Entity Integrity ensures that:",
+    "type": "single",
+    "options": [
+      { "label": "A", "text": "Each entity has a unique identifier" },
+      { "label": "B", "text": "Data is colorful" },
+      { "label": "C", "text": "Tables are large" },
+      { "label": "D", "text": "Queries are slow" }
+    ],
+    "correctOptions": ["A"],
+    "marks": 1
+  },
+  {
+    "text": "Domain Integrity defines:",
+    "type": "single",
+    "options": [
+      { "label": "A", "text": "Table size" },
+      { "label": "B", "text": "Allowable values for an attribute" },
+      { "label": "C", "text": "User roles" },
+      { "label": "D", "text": "Network type" }
+    ],
+    "correctOptions": ["B"],
+    "marks": 1
+  },
+  {
+    "text": "In IE, entities represent:",
+    "type": "single",
+    "options": [
+      { "label": "A", "text": "Objects or concepts" },
+      { "label": "B", "text": "Colors" },
+      { "label": "C", "text": "Programming errors" },
+      { "label": "D", "text": "Reports" }
+    ],
+    "correctOptions": ["A"],
+    "marks": 1
+  }
+]

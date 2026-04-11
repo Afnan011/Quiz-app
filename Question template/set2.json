@@ -1,0 +1,38 @@
+[
+  {
+    "text": "What is the main purpose of a Data Warehouse?",
+    "type": "single",
+    "options": [
+      { "label": "A", "text": "Handling real-time transactions" },
+      { "label": "B", "text": "Replacing OLTP databases" },
+      { "label": "C", "text": "Supporting business intelligence and analytics" },
+      { "label": "D", "text": "Storing transactional data" }
+    ],
+    "correctOptions": ["C"],
+    "marks": 1
+  },
+  {
+    "text": "Which process is used to extract, clean, and load data into a Data Warehouse?",
+    "type": "single",
+    "options": [
+      { "label": "A", "text": "OLAP" },
+      { "label": "B", "text": "ER Model" },
+      { "label": "C", "text": "ETL" },
+      { "label": "D", "text": "OLTP" }
+    ],
+    "correctOptions": ["C"],
+    "marks": 1
+  },
+  {
+    "text": "Which schema is the simplest for a Data Warehouse?",
+    "type": "single",
+    "options": [
+      { "label": "A", "text": "Network Schema" },
+      { "label": "B", "text": "Galaxy Schema" },
+      { "label": "C", "text": "Star Schema" },
+      { "label": "D", "text": "Snowflake Schema" }
+    ],
+    "correctOptions": ["C"],
+    "marks": 1
+  }
+]

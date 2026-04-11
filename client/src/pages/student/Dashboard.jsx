@@ -25,10 +25,17 @@ export default function StudentDashboard() {
   const getButton = () => {
     const status = quizInfo?.attemptStatus;
     if (status === 'submitted' || status === 'force_submitted') {
+      if (quizInfo?.quiz?.resultsPublished) {
+        return (
+          <button onClick={() => navigate('/student/result')} className="w-full py-3 bg-slate-700 text-white font-semibold rounded-xl hover:bg-slate-800 transition">
+            📊 View My Results
+          </button>
+        );
+      }
       return (
-        <button onClick={() => navigate('/student/result')} className="w-full py-3 bg-slate-600 text-white font-semibold rounded-xl hover:bg-slate-700 transition">
-          View Results
-        </button>
+        <div className="w-full py-3 bg-emerald-50 border border-emerald-200 text-emerald-700 font-semibold rounded-xl text-center text-sm">
+          ✅ Exam Submitted — Results will be published by your teacher.
+        </div>
       );
     }
     if (status === 'in_progress') {
@@ -98,7 +105,7 @@ export default function StudentDashboard() {
 
             <div className="grid grid-cols-3 gap-3 mb-6">
               <div className="bg-slate-50 rounded-xl p-4 text-center">
-                <div className="text-2xl font-bold text-slate-800">{quizInfo.quiz.questions?.length ?? '?'}</div>
+                <div className="text-2xl font-bold text-slate-800">{quizInfo.questionsCount ?? '?'}</div>
                 <div className="text-xs text-slate-500 mt-0.5">Questions</div>
               </div>
               <div className="bg-slate-50 rounded-xl p-4 text-center">

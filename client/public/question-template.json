@@ -1,0 +1,38 @@
+[
+  {
+    "text": "What is the capital of India?",
+    "type": "single",
+    "options": [
+      { "label": "A", "text": "Mumbai" },
+      { "label": "B", "text": "New Delhi" },
+      { "label": "C", "text": "Chennai" },
+      { "label": "D", "text": "Kolkata" }
+    ],
+    "correctOptions": ["B"],
+    "marks": 1
+  },
+  {
+    "text": "Which of the following are programming languages?",
+    "type": "multiple",
+    "options": [
+      { "label": "A", "text": "Python" },
+      { "label": "B", "text": "HTML" },
+      { "label": "C", "text": "JavaScript" },
+      { "label": "D", "text": "Microsoft Word" }
+    ],
+    "correctOptions": ["A", "C"],
+    "marks": 2
+  },
+  {
+    "text": "What does CPU stand for?",
+    "type": "single",
+    "options": [
+      { "label": "A", "text": "Central Processing Unit" },
+      { "label": "B", "text": "Computer Personal Unit" },
+      { "label": "C", "text": "Central Program Utility" },
+      { "label": "D", "text": "Core Processing Unit" }
+    ],
+    "correctOptions": ["A"],
+    "marks": 1
+  }
+]

@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import api from '../../utils/api';
 
 const RULES = [
   'The exam must be taken in fullscreen mode. Exiting fullscreen will be recorded as a violation.',
@@ -14,6 +15,16 @@ const RULES = [
 export default function PreExamPage() {
   const navigate = useNavigate();
   const [agreed, setAgreed] = useState(false);
+
+  // Guard: redirect if exam already submitted or no active quiz
+  useEffect(() => {
+    api.get('/student/quiz').then(({ data }) => {
+      const status = data?.attemptStatus;
+      if (status === 'submitted' || status === 'force_submitted') {
+        navigate('/student', { replace: true });
+      }
+    }).catch(() => navigate('/student', { replace: true }));
+  }, []);
 
   return (
     <div className="min-h-screen bg-slate-50 flex items-center justify-center p-4">

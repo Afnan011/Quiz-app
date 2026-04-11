@@ -45,4 +45,15 @@ router.put('/:quizId/toggle', async (req, res) => {
   } catch { res.status(500).json({ message: 'Server error.' }); }
 });
 
+// PUT /api/quiz/:quizId/publish-results — publish/unpublish results for students
+router.put('/:quizId/publish-results', async (req, res) => {
+  try {
+    const quiz = await Quiz.findById(req.params.quizId);
+    if (!quiz) return res.status(404).json({ message: 'Quiz not found.' });
+    quiz.resultsPublished = !quiz.resultsPublished;
+    await quiz.save();
+    res.json({ resultsPublished: quiz.resultsPublished });
+  } catch { res.status(500).json({ message: 'Server error.' }); }
+});
+
 export default router;

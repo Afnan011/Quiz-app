@@ -5,11 +5,18 @@ import api from '../../utils/api';
 export default function ResultPage() {
   const navigate = useNavigate();
   const [data, setData] = useState(null);
+  const [published, setPublished] = useState(false);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    api.get('/student/result')
-      .then(({ data }) => setData(data))
+    // Check if results are published from the quiz info
+    api.get('/student/quiz')
+      .then(({ data: quizInfo }) => {
+        setPublished(!!quizInfo?.quiz?.resultsPublished);
+        if (quizInfo?.quiz?.resultsPublished) {
+          return api.get('/student/result').then(({ data: result }) => setData(result));
+        }
+      })
       .catch(() => navigate('/student'))
       .finally(() => setLoading(false));
   }, []);
@@ -21,6 +28,34 @@ export default function ResultPage() {
           <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
           <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
         </svg>
+      </div>
+    );
+  }
+
+  // Results not yet published
+  if (!published) {
+    return (
+      <div className="min-h-screen bg-slate-50 flex items-center justify-center p-4">
+        <div className="max-w-md w-full bg-white border border-slate-200 rounded-2xl shadow-sm p-10 text-center">
+          <div className="w-16 h-16 rounded-full bg-emerald-100 flex items-center justify-center mx-auto mb-5">
+            <svg className="w-8 h-8 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+            </svg>
+          </div>
+          <h1 className="text-2xl font-bold text-slate-900 mb-2">Exam Submitted!</h1>
+          <p className="text-slate-500 text-sm mb-6">
+            Your answers have been recorded successfully. Results will be published by your teacher at a later time.
+          </p>
+          <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 text-amber-700 text-sm mb-6">
+            🔒 Results are currently not available. Please check back later or contact your teacher.
+          </div>
+          <button
+            onClick={() => navigate('/student')}
+            className="w-full py-3 bg-indigo-600 text-white font-semibold rounded-xl hover:bg-indigo-700 transition"
+          >
+            Back to Dashboard
+          </button>
+        </div>
       </div>
     );
   }

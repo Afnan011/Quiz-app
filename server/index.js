@@ -19,7 +19,7 @@ const app = express();
 // Rate limiting on auth
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 20,
+  max: parseInt(process.env.RATE_LIMIT_MAX) || 200,
   message: { message: 'Too many login attempts. Please try again later.' },
 });
 

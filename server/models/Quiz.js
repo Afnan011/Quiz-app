@@ -13,6 +13,7 @@ const quizSchema = new mongoose.Schema({
     maxViolations: { type: Number, default: 3, min: 1, max: 10 },
   },
   isActive: { type: Boolean, default: false },
+  resultsPublished: { type: Boolean, default: false },
   questions: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Question' }],
   createdAt: { type: Date, default: Date.now },
 });

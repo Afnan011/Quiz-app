@@ -21,11 +21,20 @@ router.get('/quiz', async (req, res) => {
     if (!cls || !cls.quizId) return res.status(404).json({ message: 'No quiz assigned to your class.' });
     if (!cls.quizId.isActive) return res.status(403).json({ message: 'Quiz is not active yet.' });
 
-    const attempt = await Attempt.findOne({ studentId: req.user.id, quizId: cls.quizId._id });
-    const quiz = cls.quizId.toObject();
-    delete quiz.questions; // Don't send question IDs in the preview
+    // Always get the most authoritative status across all attempts
+    const allAttempts = await Attempt.find({ studentId: req.user.id, quizId: cls.quizId._id });
+    let attemptStatus = 'not_started';
+    if (allAttempts.some(a => ['submitted', 'force_submitted'].includes(a.status))) {
+      attemptStatus = 'submitted';
+    } else if (allAttempts.some(a => a.status === 'in_progress')) {
+      attemptStatus = 'in_progress';
+    }
 
-    res.json({ quiz, attemptStatus: attempt?.status || 'not_started' });
+    const quiz = cls.quizId.toObject();
+    const questionsCount = quiz.questions?.length || 0;
+    delete quiz.questions; // Don't send question IDs
+
+    res.json({ quiz, questionsCount, attemptStatus });
   } catch { res.status(500).json({ message: 'Server error.' }); }
 });
 
@@ -38,18 +47,21 @@ router.post('/quiz/start', async (req, res) => {
     const quiz = await Quiz.findById(cls.quizId).populate('questions');
     if (!quiz || !quiz.isActive) return res.status(403).json({ message: 'Quiz is not active.' });
 
-    // Check if already attempted
-    const existingAttempt = await Attempt.findOne({ studentId: req.user.id, quizId: quiz._id });
-    if (existingAttempt && ['submitted', 'force_submitted'].includes(existingAttempt.status)) {
+    // Check ALL attempts — block if ANY is submitted/force_submitted
+    const allAttempts = await Attempt.find({ studentId: req.user.id, quizId: quiz._id }).sort({ createdAt: -1 });
+    const submittedAttempt = allAttempts.find(a => ['submitted', 'force_submitted'].includes(a.status));
+    if (submittedAttempt) {
       return res.status(409).json({ message: 'You have already submitted this exam.' });
     }
-    if (existingAttempt && existingAttempt.status === 'in_progress') {
-      // Resume: return already started attempt info
+
+    const inProgressAttempt = allAttempts.find(a => a.status === 'in_progress');
+    if (inProgressAttempt) {
+      // Resume existing attempt
       let questions = await Question.find({ quizId: quiz._id }).select('-correctOptions').sort('order').lean();
-      return res.json({ attempt: existingAttempt, questions, quiz: { title: quiz.title, settings: quiz.settings } });
+      return res.json({ attempt: inProgressAttempt, questions, quiz: { title: quiz.title, settings: quiz.settings } });
     }
 
-    // Create new attempt
+    // No active attempt — create fresh one
     const attempt = new Attempt({
       studentId: req.user.id,
       quizId: quiz._id,
