@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { useEffect } from 'react';
+import { Analytics } from '@vercel/analytics/react';
 import useAuthStore from './store/authStore';
 
 // Auth Pages
@@ -54,6 +55,9 @@ export default function App() {
         <Route path="/" element={<Navigate to="/login" replace />} />
         <Route path="*" element={<Navigate to="/login" replace />} />
       </Routes>
+      
+      {/* Vercel Web Analytics */}
+      <Analytics />
     </BrowserRouter>
   );
 }
