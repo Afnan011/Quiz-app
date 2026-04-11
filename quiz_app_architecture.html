@@ -1,0 +1,131 @@
+
+<style>
+  .arch { font-family: var(--font-sans); padding: 1rem 0; }
+  .section-label { font-size: 11px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-text-tertiary); margin: 0 0 8px 4px; }
+  .row { display: flex; gap: 10px; margin-bottom: 10px; flex-wrap: wrap; }
+  .box { border-radius: 8px; padding: 10px 14px; font-size: 13px; font-weight: 500; flex: 1; min-width: 120px; border: 0.5px solid; }
+  .box small { display: block; font-size: 11px; font-weight: 400; margin-top: 3px; }
+  /* colors */
+  .purple { background: #EEEDFE; border-color: #AFA9EC; color: #3C3489; }
+  .purple small { color: #534AB7; }
+  .teal { background: #E1F5EE; border-color: #5DCAA5; color: #085041; }
+  .teal small { color: #0F6E56; }
+  .coral { background: #FAECE7; border-color: #F0997B; color: #712B13; }
+  .coral small { color: #993C1D; }
+  .blue { background: #E6F1FB; border-color: #85B7EB; color: #0C447C; }
+  .blue small { color: #185FA5; }
+  .amber { background: #FAEEDA; border-color: #EF9F27; color: #633806; }
+  .amber small { color: #854F0B; }
+  .gray { background: #F1EFE8; border-color: #B4B2A9; color: #444441; }
+  .gray small { color: #5F5E5A; }
+  .red { background: #FCEBEB; border-color: #F09595; color: #791F1F; }
+  .red small { color: #A32D2D; }
+  .green { background: #EAF3DE; border-color: #97C459; color: #27500A; }
+  .green small { color: #3B6D11; }
+  .divider { border: none; border-top: 0.5px solid var(--color-border-tertiary); margin: 14px 0; }
+  .badge { display: inline-block; font-size: 10px; padding: 2px 7px; border-radius: 4px; font-weight: 500; margin-top: 4px; }
+  .badge-build { background: #FAECE7; color: #993C1D; border: 0.5px solid #F0997B; }
+  .badge-base { background: #E1F5EE; color: #085041; border: 0.5px solid #5DCAA5; }
+  .arrow-row { display: flex; align-items: center; justify-content: center; gap: 6px; margin: 4px 0 10px; }
+  .arrow { font-size: 18px; color: var(--color-text-tertiary); }
+  .phase-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 8px; }
+  .phase-box { border-radius: 8px; padding: 10px 12px; border: 0.5px solid var(--color-border-tertiary); }
+  .phase-num { font-size: 11px; font-weight: 500; color: var(--color-text-tertiary); }
+  .phase-title { font-size: 13px; font-weight: 500; color: var(--color-text-primary); margin: 2px 0; }
+  .phase-weeks { font-size: 11px; color: var(--color-text-secondary); }
+  @media (prefers-color-scheme: dark) {
+    .purple { background: #3C3489; border-color: #7F77DD; color: #EEEDFE; }
+    .purple small { color: #CECBF6; }
+    .teal { background: #085041; border-color: #1D9E75; color: #E1F5EE; }
+    .teal small { color: #9FE1CB; }
+    .coral { background: #712B13; border-color: #D85A30; color: #FAECE7; }
+    .coral small { color: #F5C4B3; }
+    .blue { background: #0C447C; border-color: #378ADD; color: #E6F1FB; }
+    .blue small { color: #B5D4F4; }
+    .amber { background: #633806; border-color: #BA7517; color: #FAEEDA; }
+    .amber small { color: #FAC775; }
+    .gray { background: #444441; border-color: #888780; color: #F1EFE8; }
+    .gray small { color: #D3D1C7; }
+    .red { background: #791F1F; border-color: #E24B4A; color: #FCEBEB; }
+    .red small { color: #F7C1C1; }
+    .green { background: #27500A; border-color: #639922; color: #EAF3DE; }
+    .green small { color: #C0DD97; }
+    .badge-build { background: #712B13; color: #F5C4B3; border-color: #D85A30; }
+    .badge-base { background: #085041; color: #9FE1CB; border-color: #1D9E75; }
+  }
+</style>
+
+<div class="arch">
+
+  <p class="section-label">Frontend — React 18 + Vite + Tailwind CSS</p>
+  <div class="row">
+    <div class="box purple">Teacher Portal<small>Classes · Students · Questions · Settings</small></div>
+    <div class="box teal">Student Portal<small>Dashboard · Pre-Exam · Exam Room · Results</small></div>
+    <div class="box red">Anti-Cheat Layer<small>Fullscreen · Tab · Copy · DevTools · Violations</small><span class="badge badge-build">build from scratch</span></div>
+  </div>
+
+  <div class="arrow-row"><span class="arrow">↕</span><span style="font-size:12px;color:var(--color-text-secondary)">Axios + JWT httpOnly cookies</span><span class="arrow">↕</span></div>
+
+  <p class="section-label">Backend — Node.js + Express</p>
+  <div class="row">
+    <div class="box blue">Auth Routes<small>/login · /change-password · /logout</small><span class="badge badge-base">base repo</span></div>
+    <div class="box blue">Teacher Routes<small>/classes · /students · /questions · /quiz</small><span class="badge badge-base">base repo</span></div>
+    <div class="box blue">Student Routes<small>/quiz · /start · /submit · /violation</small><span class="badge badge-build">build</span></div>
+    <div class="box blue">Middleware<small>JWT verify · Role guard · Rate limit</small></div>
+  </div>
+
+  <div class="arrow-row"><span class="arrow">↕</span><span style="font-size:12px;color:var(--color-text-secondary)">Mongoose ODM</span><span class="arrow">↕</span></div>
+
+  <p class="section-label">Database — MongoDB Atlas</p>
+  <div class="row">
+    <div class="box gray">User<small>teacher | student · isFirstLogin</small></div>
+    <div class="box gray">Class<small>students[] · quizId</small></div>
+    <div class="box gray">Quiz<small>settings · questions[]</small></div>
+    <div class="box gray">Question<small>single | multiple · correctOptions</small></div>
+    <div class="box gray">Attempt<small>status · answers · score</small></div>
+    <div class="box gray">ViolationLog<small>type · count · timestamp</small></div>
+  </div>
+
+  <hr class="divider">
+
+  <p class="section-label">Key features to build from scratch</p>
+  <div class="row">
+    <div class="box coral">One-attempt lock<small>Blocks re-entry after submit</small></div>
+    <div class="box coral">Teacher reset<small>Clears attempt for network drops</small></div>
+    <div class="box coral">Excel import/export<small>SheetJS bulk student upload</small></div>
+    <div class="box coral">JSON bulk upload<small>20 questions at once via template</small></div>
+    <div class="box coral">Student watermark<small>Name + reg no. on exam page</small></div>
+  </div>
+
+  <hr class="divider">
+
+  <p class="section-label">Development phases</p>
+  <div class="phase-grid">
+    <div class="phase-box">
+      <div class="phase-num">Phase 1</div>
+      <div class="phase-title">Foundation</div>
+      <div class="phase-weeks">Week 1–2 · Auth, models, repo setup</div>
+    </div>
+    <div class="phase-box">
+      <div class="phase-num">Phase 2</div>
+      <div class="phase-title">Teacher features</div>
+      <div class="phase-weeks">Week 3–4 · CRUD, import/export</div>
+    </div>
+    <div class="phase-box">
+      <div class="phase-num">Phase 3</div>
+      <div class="phase-title">Exam engine</div>
+      <div class="phase-weeks">Week 5–6 · Timer, submit, results</div>
+    </div>
+    <div class="phase-box">
+      <div class="phase-num">Phase 4</div>
+      <div class="phase-title">Anti-cheat</div>
+      <div class="phase-weeks">Week 7 · All violation detection</div>
+    </div>
+    <div class="phase-box">
+      <div class="phase-num">Phase 5</div>
+      <div class="phase-title">Polish & test</div>
+      <div class="phase-weeks">Week 8 · Security, UX, QA</div>
+    </div>
+  </div>
+
+</div>
