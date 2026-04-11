@@ -89,34 +89,34 @@ export default function QuestionsTab({ classData }) {
     }
   };
 
-  if (!quizId) return <div className="py-10 text-center text-slate-400">No quiz linked to this class.</div>;
-  if (loading) return <div className="py-10 text-center text-slate-400">Loading questions…</div>;
+  if (!quizId) return <div className="py-10 text-center text-gray-500 bg-gray-50 rounded-xl border border-dashed border-gray-300">No active quiz linked to this class.</div>;
+  if (loading) return <div className="py-10 text-center text-gray-400">Loading questions…</div>;
 
   return (
     <div>
       <div className="flex gap-2 mb-6">
-        <button onClick={openNew} className="px-4 py-2 bg-indigo-600 text-white text-sm font-semibold rounded-xl hover:bg-indigo-700 transition">+ Add Question</button>
-        <button onClick={() => setShowBulk(true)} className="px-4 py-2 bg-white border border-slate-200 text-slate-700 text-sm rounded-xl hover:bg-slate-50 transition">📋 Bulk JSON Upload</button>
-        <a href="/question-template.json" download className="px-4 py-2 bg-white border border-slate-200 text-slate-700 text-sm rounded-xl hover:bg-slate-50 transition">⬇ Template</a>
+        <button onClick={openNew} className="px-4 py-2 bg-blue-600 border border-transparent text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors">+ Add Question</button>
+        <button onClick={() => setShowBulk(true)} className="px-4 py-2 bg-white border border-gray-300 text-gray-700 text-sm font-medium rounded-lg hover:bg-gray-50 transition-colors">📋 Bulk JSON Upload</button>
+        <a href="/question-template.json" download className="px-4 py-2 bg-white border border-gray-300 text-gray-700 text-sm font-medium rounded-lg hover:bg-gray-50 transition-colors">⬇ Template</a>
       </div>
 
       {questions.length === 0 ? (
-        <div className="text-center py-16 bg-white rounded-2xl border border-dashed border-slate-200 text-slate-400">
+        <div className="text-center py-16 bg-gray-50 rounded-xl border border-dashed border-gray-300 text-gray-500">
           No questions yet. Add one to get started.
         </div>
       ) : (
         <div className="space-y-3">
           {questions.map((q, i) => (
-            <div key={q._id} className="bg-white border border-slate-200 rounded-xl p-4 flex gap-4 items-start">
-              <span className="text-slate-300 font-mono text-sm pt-0.5 w-6 text-right flex-shrink-0">{i + 1}</span>
+            <div key={q._id} className="bg-white border border-gray-200 rounded-xl p-4 flex gap-4 items-start shadow-sm hover:shadow transition-shadow">
+              <span className="text-gray-400 font-mono text-sm pt-0.5 w-6 text-right flex-shrink-0">{i + 1}</span>
               <div className="flex-1 min-w-0">
-                <p className="font-medium text-slate-900 text-sm">{q.text}</p>
+                <p className="font-medium text-gray-900 text-sm">{q.text}</p>
                 <div className="flex flex-wrap gap-2 mt-2">
                   {q.options.map(opt => (
                     <span key={opt.label} className={`text-xs px-2.5 py-1 rounded-lg border ${
                       q.correctOptions.includes(opt.label)
                         ? 'bg-emerald-50 border-emerald-200 text-emerald-700 font-semibold'
-                        : 'bg-slate-50 border-slate-200 text-slate-600'
+                        : 'bg-gray-50 border-gray-200 text-gray-600'
                     }`}>
                       {opt.label}: {opt.text}
                     </span>
@@ -124,12 +124,12 @@ export default function QuestionsTab({ classData }) {
                 </div>
               </div>
               <div className="flex items-center gap-3 flex-shrink-0">
-                <span className={`px-2 py-0.5 text-xs rounded-full font-medium ${
-                  q.type === 'single' ? 'bg-blue-50 text-blue-600' : 'bg-purple-50 text-purple-600'
+                <span className={`px-2 py-0.5 text-xs rounded-md font-medium border ${
+                  q.type === 'single' ? 'bg-blue-50 border-blue-200 text-blue-700' : 'bg-purple-50 border-purple-200 text-purple-700'
                 }`}>{TYPE_BADGE[q.type]}</span>
-                <span className="text-xs text-slate-400">{q.marks}pt</span>
-                <button onClick={() => openEdit(q)} className="text-xs px-3 py-1.5 bg-slate-50 text-slate-700 rounded-lg hover:bg-slate-100 transition">Edit</button>
-                <button onClick={() => handleDelete(q._id)} className="text-xs px-3 py-1.5 bg-red-50 text-red-600 rounded-lg hover:bg-red-100 transition">Delete</button>
+                <span className="text-xs text-gray-400 font-medium">{q.marks}pt</span>
+                <button onClick={() => openEdit(q)} className="text-xs px-3 py-1.5 border border-gray-200 bg-white text-gray-700 rounded-md hover:bg-gray-50 transition-colors">Edit</button>
+                <button onClick={() => handleDelete(q._id)} className="text-xs px-3 py-1.5 border border-red-200 bg-red-50 text-red-600 rounded-md hover:bg-red-100 hover:border-red-300 transition-colors">Delete</button>
               </div>
             </div>
           ))}
@@ -138,9 +138,9 @@ export default function QuestionsTab({ classData }) {
 
       {/* Question Form Modal */}
       {showForm && (
-        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4 overflow-y-auto">
-          <div className="bg-white rounded-2xl shadow-2xl p-6 w-full max-w-2xl my-8">
-            <h3 className="font-bold text-slate-900 text-lg mb-4">{editingQ ? 'Edit' : 'Add'} Question</h3>
+        <div className="fixed inset-0 bg-gray-900/40 backdrop-blur-sm flex items-center justify-center z-50 p-4 overflow-y-auto">
+          <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-6 w-full max-w-2xl my-8">
+            <h3 className="font-bold text-gray-900 text-lg mb-4 tracking-tight">{editingQ ? 'Edit' : 'Add'} Question</h3>
             <form onSubmit={handleSave} className="space-y-4">
               <textarea
                 value={form.text}
@@ -148,35 +148,35 @@ export default function QuestionsTab({ classData }) {
                 placeholder="Question text"
                 required
                 rows={3}
-                className="w-full px-4 py-3 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-300 resize-none"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 resize-none transition-shadow"
               />
               <div className="flex gap-3">
                 {['single', 'multiple'].map(t => (
-                  <label key={t} className={`flex items-center gap-2 px-4 py-2 rounded-xl border cursor-pointer text-sm font-medium transition ${
-                    form.type === t ? 'border-indigo-300 bg-indigo-50 text-indigo-700' : 'border-slate-200 text-slate-600 hover:bg-slate-50'
+                  <label key={t} className={`flex items-center gap-2 px-3 py-1.5 rounded-lg border cursor-pointer text-sm font-medium transition ${
+                    form.type === t ? 'border-blue-500 bg-blue-50 text-blue-700' : 'border-gray-200 text-gray-600 hover:bg-gray-50'
                   }`}>
                     <input type="radio" name="type" value={t} checked={form.type === t} onChange={() => setForm(p => ({ ...p, type: t, correctOptions: [] }))} className="sr-only" />
                     {t === 'single' ? 'Single Answer' : 'Multiple Answers'}
                   </label>
                 ))}
-                <div className="flex items-center gap-2 ml-auto">
-                  <label className="text-sm text-slate-500">Marks</label>
+                <div className="flex items-center gap-2 ml-auto text-gray-700">
+                  <label className="text-sm font-medium">Marks</label>
                   <input
                     type="number"
                     value={form.marks}
                     onChange={e => setForm(p => ({ ...p, marks: Number(e.target.value) }))}
                     min={0}
-                    className="w-16 px-2 py-1.5 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-1 focus:ring-indigo-300 text-center"
+                    className="w-16 px-2 py-1 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-center"
                   />
                 </div>
               </div>
               <div className="space-y-2">
                 {form.options.map((opt, idx) => (
                   <div key={opt.label} className="flex gap-2 items-center">
-                    <label className={`flex items-center justify-center w-8 h-8 rounded-lg border cursor-pointer font-mono text-sm font-bold transition flex-shrink-0 ${
+                    <label className={`flex items-center justify-center w-8 h-8 rounded-lg border cursor-pointer font-mono text-sm font-bold transition-colors flex-shrink-0 ${
                       form.correctOptions.includes(opt.label)
                         ? 'border-emerald-400 bg-emerald-50 text-emerald-700'
-                        : 'border-slate-200 bg-slate-50 text-slate-500 hover:border-slate-300'
+                        : 'border-gray-200 bg-gray-50 text-gray-500 hover:border-gray-300 hover:bg-gray-100'
                     }`}>
                       <input type="checkbox" className="sr-only" checked={form.correctOptions.includes(opt.label)} onChange={() => toggleCorrect(opt.label)} />
                       {opt.label}
@@ -189,15 +189,15 @@ export default function QuestionsTab({ classData }) {
                         setForm(p => ({ ...p, options: newOpts }));
                       }}
                       placeholder={`Option ${opt.label}`}
-                      className="flex-1 px-3 py-2 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-300"
+                      className="flex-1 px-3 py-2 border border-gray-300 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-shadow"
                     />
                   </div>
                 ))}
               </div>
-              <p className="text-xs text-slate-400">Click the letter badge to mark as correct answer(s).</p>
-              <div className="flex gap-3 pt-1">
-                <button type="button" onClick={() => setShowForm(false)} className="flex-1 py-2.5 border border-slate-200 text-slate-600 text-sm rounded-xl hover:bg-slate-50 transition">Cancel</button>
-                <button type="submit" disabled={saving} className="flex-1 py-2.5 bg-indigo-600 text-white text-sm font-semibold rounded-xl hover:bg-indigo-700 disabled:opacity-60 transition">
+              <p className="text-xs text-gray-400">Click the letter badge to mark as correct answer(s).</p>
+              <div className="flex gap-3 pt-2">
+                <button type="button" onClick={() => setShowForm(false)} className="flex-1 py-2 bg-white border border-gray-300 text-gray-700 text-sm font-medium rounded-lg hover:bg-gray-50 transition-colors">Cancel</button>
+                <button type="submit" disabled={saving} className="flex-1 py-2 bg-blue-600 border border-transparent text-white text-sm font-medium rounded-lg hover:bg-blue-700 disabled:bg-blue-300 transition-colors">
                   {saving ? 'Saving…' : editingQ ? 'Save Changes' : 'Add Question'}
                 </button>
               </div>
@@ -208,21 +208,21 @@ export default function QuestionsTab({ classData }) {
 
       {/* Bulk Upload Modal */}
       {showBulk && (
-        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-2xl shadow-2xl p-6 w-full max-w-2xl">
-            <h3 className="font-bold text-slate-900 text-lg mb-2">Bulk Upload Questions (JSON)</h3>
-            <p className="text-xs text-slate-400 mb-3">Paste a JSON array of questions. Each item needs: text, type, options, correctOptions, marks.</p>
+        <div className="fixed inset-0 bg-gray-900/40 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-6 w-full max-w-2xl">
+            <h3 className="font-bold text-gray-900 text-lg mb-2">Bulk Upload Questions (JSON)</h3>
+            <p className="text-sm text-gray-500 mb-4">Paste a JSON array of questions. Each item requires: <code className="text-xs bg-gray-100 px-1 py-0.5 rounded">text</code>, <code className="text-xs bg-gray-100 px-1 py-0.5 rounded">type</code>, <code className="text-xs bg-gray-100 px-1 py-0.5 rounded">options</code>, <code className="text-xs bg-gray-100 px-1 py-0.5 rounded">correctOptions</code>, <code className="text-xs bg-gray-100 px-1 py-0.5 rounded">marks</code>.</p>
             <textarea
               value={bulkText}
               onChange={e => setBulkText(e.target.value)}
               rows={10}
               placeholder='[{"text":"...","type":"single","options":[{"label":"A","text":"..."},...],"correctOptions":["A"],"marks":1}]'
-              className="w-full px-4 py-3 border border-slate-200 rounded-xl text-xs font-mono focus:outline-none focus:ring-2 focus:ring-indigo-300 resize-none mb-3"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm font-mono text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 resize-none mb-3 transition-shadow"
             />
-            {bulkError && <p className="text-red-500 text-xs mb-3">{bulkError}</p>}
+            {bulkError && <p className="text-red-600 text-xs font-medium mb-3">{bulkError}</p>}
             <div className="flex gap-3">
-              <button onClick={() => setShowBulk(false)} className="flex-1 py-2.5 border border-slate-200 text-slate-600 text-sm rounded-xl hover:bg-slate-50 transition">Cancel</button>
-              <button onClick={handleBulkUpload} className="flex-1 py-2.5 bg-indigo-600 text-white text-sm font-semibold rounded-xl hover:bg-indigo-700 transition">Upload</button>
+              <button onClick={() => setShowBulk(false)} className="flex-1 py-2 bg-white border border-gray-300 text-gray-700 text-sm font-medium rounded-lg hover:bg-gray-50 transition-colors">Cancel</button>
+              <button onClick={handleBulkUpload} className="flex-1 py-2 bg-blue-600 border border-transparent text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors">Upload JSON</button>
             </div>
           </div>
         </div>

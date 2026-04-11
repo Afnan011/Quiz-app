@@ -40,17 +40,17 @@ export default function OverviewTab({ classData, onRefresh }) {
 
       {/* Quiz card */}
       {quiz ? (
-        <div className="bg-white border border-slate-200 rounded-2xl p-6">
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="font-semibold text-slate-900">Quiz Configuration</h3>
+        <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm">
+          <div className="flex items-center justify-between mb-4 pb-4 border-b border-gray-100">
+            <h3 className="font-semibold text-gray-900 border-none">Quiz Configuration</h3>
           <div className="flex items-center gap-2">
             <button
               onClick={handleToggleQuiz}
               disabled={toggling}
-              className={`px-4 py-2 text-sm font-semibold rounded-xl transition ${
+              className={`px-3 py-1.5 text-xs font-medium rounded-lg transition border ${
                 quiz.isActive
-                  ? 'bg-red-50 text-red-600 hover:bg-red-100'
-                  : 'bg-emerald-50 text-emerald-600 hover:bg-emerald-100'
+                  ? 'bg-red-50 border-red-200 text-red-700 hover:bg-red-100'
+                  : 'bg-emerald-50 border-emerald-200 text-emerald-700 hover:bg-emerald-100'
               }`}
             >
               {toggling ? '…' : quiz.isActive ? 'Deactivate Quiz' : 'Activate Quiz'}
@@ -58,17 +58,17 @@ export default function OverviewTab({ classData, onRefresh }) {
             <button
               onClick={handlePublishResults}
               disabled={publishing}
-              className={`px-4 py-2 text-sm font-semibold rounded-xl transition ${
+              className={`px-3 py-1.5 text-xs font-medium rounded-lg transition border ${
                 quiz.resultsPublished
-                  ? 'bg-slate-100 text-slate-600 hover:bg-slate-200'
-                  : 'bg-indigo-50 text-indigo-600 hover:bg-indigo-100'
+                  ? 'bg-white border-gray-300 text-gray-600 hover:bg-gray-50'
+                  : 'bg-blue-50 border-blue-200 text-blue-700 hover:bg-blue-100'
               }`}
             >
-              {publishing ? '…' : quiz.resultsPublished ? '🔒 Unpublish Results' : '📢 Publish Results'}
+              {publishing ? '…' : quiz.resultsPublished ? 'Unpublish Results' : 'Publish Results'}
             </button>
           </div>
           </div>
-          <div className="grid sm:grid-cols-2 gap-4 text-sm">
+          <div className="grid sm:grid-cols-2 gap-x-8 gap-y-3 text-sm">
             <InfoRow label="Title" value={quiz.title} />
             <InfoRow label="Time per Question" value={quiz.settings?.timeLimitPerQuestion ? `${quiz.settings.timeLimitPerQuestion}s` : 'No limit'} />
             <InfoRow label="Total Time" value={quiz.settings?.totalTimeLimit ? `${quiz.settings.totalTimeLimit} min` : 'No limit'} />
@@ -78,7 +78,7 @@ export default function OverviewTab({ classData, onRefresh }) {
           </div>
         </div>
       ) : (
-        <div className="bg-amber-50 border border-amber-200 rounded-2xl p-6 text-amber-800 text-sm">
+        <div className="bg-amber-50 border border-amber-200 rounded-xl p-5 text-amber-800 text-sm">
           No quiz linked to this class. Go to the <strong>Settings</strong> tab to configure.
         </div>
       )}
@@ -86,27 +86,31 @@ export default function OverviewTab({ classData, onRefresh }) {
   );
 }
 
-function StatCard({ label, value, icon, color }) {
-  const colors = {
-    indigo: 'bg-indigo-50 border-indigo-100 text-indigo-700',
-    purple: 'bg-purple-50 border-purple-100 text-purple-700',
-    emerald: 'bg-emerald-50 border-emerald-100 text-emerald-700',
-    slate: 'bg-slate-50 border-slate-200 text-slate-600',
-  };
+const StatusBadge = ({ active }) => (
+  <span className={`inline-flex items-center gap-1.5 px-2 py-0.5 border rounded-md text-xs font-medium ${
+    active ? 'bg-emerald-50 border-emerald-200 text-emerald-700' : 'bg-gray-50 border-gray-200 text-gray-500'
+  }`}>
+    <span className={`w-1.5 h-1.5 rounded-full ${active ? 'bg-emerald-500' : 'bg-gray-400'}`} />
+    {active ? 'Active' : 'Inactive'}
+  </span>
+);
+
+function StatCard({ label, value, icon }) {
   return (
-    <div className={`border rounded-2xl p-5 ${colors[color]}`}>
-      <div className="text-2xl mb-2">{icon}</div>
-      <div className="text-2xl font-bold">{value}</div>
-      <div className="text-sm font-medium opacity-70 mt-0.5">{label}</div>
+    <div className="bg-white border border-gray-200 rounded-xl p-5">
+      <div className="flex items-center gap-3 mb-2">
+        <span className="text-xs font-semibold text-gray-500 uppercase tracking-wider">{label}</span>
+      </div>
+      <div className="text-3xl font-bold text-gray-900">{value}</div>
     </div>
   );
 }
 
 function InfoRow({ label, value }) {
   return (
-    <div className="flex justify-between items-center py-2 border-b border-slate-50">
-      <span className="text-slate-500">{label}</span>
-      <span className="font-medium text-slate-900">{value}</span>
+    <div className="flex justify-between items-center py-2 border-b border-gray-100 last:border-0 hover:bg-gray-50 -mx-2 px-2 rounded transition-colors">
+      <span className="text-gray-500">{label}</span>
+      <span className="font-medium text-gray-900">{value}</span>
     </div>
   );
 }

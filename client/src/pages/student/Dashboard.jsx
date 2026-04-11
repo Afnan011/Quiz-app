@@ -46,77 +46,80 @@ export default function StudentDashboard() {
       );
     }
     return (
-      <button onClick={() => navigate('/student/pre-exam')} className="w-full py-3 bg-indigo-600 text-white font-semibold rounded-xl hover:bg-indigo-700 transition shadow-lg shadow-indigo-200">
-        Start Exam
-      </button>
+        <button onClick={() => navigate('/student/pre-exam')} className="w-full py-3 bg-blue-600 border border-transparent text-white font-medium rounded-lg hover:bg-blue-700 hover:shadow-md transition-all">
+          Start Exam
+        </button>
     );
   };
 
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="min-h-screen bg-gray-50">
       {/* Header */}
-      <header className="bg-white border-b border-slate-200 px-6 py-4">
+      <header className="bg-white border-b border-gray-200 px-6 py-4">
         <div className="max-w-3xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-lg bg-indigo-600 flex items-center justify-center">
-              <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+            <div className="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center">
+              <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 14l9-5-9-5-9 5 9 5z" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
               </svg>
             </div>
-            <span className="font-bold text-slate-800 text-lg">QuizProctor</span>
+            <span className="font-bold text-gray-900 text-lg tracking-tight">QuizProctor</span>
           </div>
-          <button onClick={handleLogout} className="text-sm text-slate-500 hover:text-slate-800 transition">Sign out</button>
+          <button onClick={handleLogout} className="text-sm font-medium text-gray-500 hover:text-gray-900 transition-colors">Sign out</button>
         </div>
       </header>
 
       <main className="max-w-3xl mx-auto px-6 py-8">
         {/* Welcome */}
         <div className="mb-8">
-          <h2 className="text-2xl font-bold text-slate-900">Welcome, {user?.name}!</h2>
-          <p className="text-slate-500 text-sm mt-1">Reg No: <span className="font-mono">{user?.registrationNumber}</span></p>
+          <h2 className="text-2xl font-bold text-gray-900 tracking-tight">Welcome, {user?.name}!</h2>
+          <p className="text-gray-500 text-sm mt-1 font-medium">Reg No: <span className="font-mono text-gray-700">{user?.registrationNumber}</span></p>
         </div>
 
         {loading ? (
           <div className="flex justify-center py-20">
-            <svg className="animate-spin w-8 h-8 text-indigo-400" fill="none" viewBox="0 0 24 24">
+            <svg className="animate-spin w-8 h-8 text-blue-400" fill="none" viewBox="0 0 24 24">
               <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
               <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
             </svg>
           </div>
         ) : error ? (
-          <div className="bg-amber-50 border border-amber-200 rounded-2xl p-8 text-center">
-            <div className="text-4xl mb-3">📋</div>
-            <p className="font-semibold text-amber-700">{error}</p>
-            <p className="text-amber-600 text-sm mt-1">Please check with your teacher when the exam is ready.</p>
+          <div className="bg-white border border-gray-200 rounded-xl p-8 text-center shadow-sm">
+            <div className="w-12 h-12 mx-auto bg-gray-50 border border-gray-100 rounded-lg flex items-center justify-center mb-4">
+              <span className="text-2xl grayscale opacity-60">📋</span>
+            </div>
+            <h3 className="font-semibold text-gray-900 text-lg mb-1">{error}</h3>
+            <p className="text-gray-500 text-sm">Please check with your teacher when the exam is ready.</p>
           </div>
         ) : (
-          <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
-            <div className="flex items-start gap-4 mb-6">
-              <div className="w-12 h-12 rounded-xl bg-indigo-100 flex items-center justify-center flex-shrink-0">
-                <svg className="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm hover:shadow transition-shadow">
+            <div className="flex items-start gap-4 mb-6 pb-6 border-b border-gray-100">
+              <div className="w-12 h-12 rounded-lg bg-gray-50 border border-gray-100 flex items-center justify-center flex-shrink-0">
+                <svg className="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                 </svg>
               </div>
-              <div className="flex-1">
-                <h3 className="font-bold text-slate-900 text-xl">{quizInfo.quiz.title}</h3>
-                {quizInfo.quiz.description && <p className="text-slate-500 text-sm mt-1">{quizInfo.quiz.description}</p>}
+              <div className="flex-1 mt-0.5">
+                <h3 className="font-bold text-gray-900 text-xl tracking-tight">{quizInfo.quiz.title}</h3>
+                {quizInfo.quiz.description && <p className="text-gray-500 text-sm mt-1">{quizInfo.quiz.description}</p>}
               </div>
             </div>
 
-            <div className="grid grid-cols-3 gap-3 mb-6">
-              <div className="bg-slate-50 rounded-xl p-4 text-center">
-                <div className="text-2xl font-bold text-slate-800">{quizInfo.questionsCount ?? '?'}</div>
-                <div className="text-xs text-slate-500 mt-0.5">Questions</div>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-6">
+              <div className="bg-white border border-gray-200 flex flex-col items-center justify-center rounded-lg p-5 text-center transition-colors hover:bg-gray-50">
+                <div className="text-2xl font-bold text-gray-900">{quizInfo.questionsCount ?? '?'}</div>
+                <div className="text-xs font-semibold text-gray-500 tracking-wider uppercase mt-1">Questions</div>
               </div>
-              <div className="bg-slate-50 rounded-xl p-4 text-center">
-                <div className="text-2xl font-bold text-slate-800">
+              <div className="bg-white border border-gray-200 flex flex-col items-center justify-center rounded-lg p-5 text-center transition-colors hover:bg-gray-50">
+                <div className="text-2xl font-bold text-gray-900">
                   {quizInfo.quiz.settings?.totalTimeLimit ? `${quizInfo.quiz.settings.totalTimeLimit}m` : '∞'}
                 </div>
-                <div className="text-xs text-slate-500 mt-0.5">Time Limit</div>
+                <div className="text-xs font-semibold text-gray-500 tracking-wider uppercase mt-1">Time Limit</div>
               </div>
-              <div className="bg-slate-50 rounded-xl p-4 text-center">
-                <div className="text-2xl font-bold text-slate-800">{quizInfo.quiz.settings?.maxViolations ?? 3}</div>
-                <div className="text-xs text-slate-500 mt-0.5">Max Warnings</div>
+              <div className="bg-white border border-gray-200 flex flex-col items-center justify-center rounded-lg p-5 text-center transition-colors hover:bg-gray-50">
+                <div className="text-2xl font-bold text-gray-900">{quizInfo.quiz.settings?.maxViolations ?? 3}</div>
+                <div className="text-xs font-semibold text-gray-500 tracking-wider uppercase mt-1">Warnings Max</div>
               </div>
             </div>
 
