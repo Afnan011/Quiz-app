@@ -41,9 +41,9 @@ export default function OverviewTab({ classData, onRefresh }) {
       {/* Quiz card */}
       {quiz ? (
         <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm">
-          <div className="flex items-center justify-between mb-4 pb-4 border-b border-gray-100">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-4 pb-4 border-b border-gray-100">
             <h3 className="font-semibold text-gray-900 border-none">Quiz Configuration</h3>
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2">
             <button
               onClick={handleToggleQuiz}
               disabled={toggling}

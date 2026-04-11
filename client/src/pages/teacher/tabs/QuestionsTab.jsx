@@ -94,9 +94,9 @@ export default function QuestionsTab({ classData }) {
 
   return (
     <div>
-      <div className="flex gap-2 mb-6">
+      <div className="flex flex-wrap gap-2 mb-6">
         <button onClick={openNew} className="px-4 py-2 bg-blue-600 border border-transparent text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors">+ Add Question</button>
-        <button onClick={() => setShowBulk(true)} className="px-4 py-2 bg-white border border-gray-300 text-gray-700 text-sm font-medium rounded-lg hover:bg-gray-50 transition-colors">📋 Bulk JSON Upload</button>
+        <button onClick={() => setShowBulk(true)} className="px-4 py-2 bg-white border border-gray-300 text-gray-700 text-sm font-medium rounded-lg hover:bg-gray-50 transition-colors">📋 Bulk JSON</button>
         <a href="/question-template.json" download className="px-4 py-2 bg-white border border-gray-300 text-gray-700 text-sm font-medium rounded-lg hover:bg-gray-50 transition-colors">⬇ Template</a>
       </div>
 
@@ -107,29 +107,31 @@ export default function QuestionsTab({ classData }) {
       ) : (
         <div className="space-y-3">
           {questions.map((q, i) => (
-            <div key={q._id} className="bg-white border border-gray-200 rounded-xl p-4 flex gap-4 items-start shadow-sm hover:shadow transition-shadow">
-              <span className="text-gray-400 font-mono text-sm pt-0.5 w-6 text-right flex-shrink-0">{i + 1}</span>
-              <div className="flex-1 min-w-0">
-                <p className="font-medium text-gray-900 text-sm">{q.text}</p>
-                <div className="flex flex-wrap gap-2 mt-2">
-                  {q.options.map(opt => (
-                    <span key={opt.label} className={`text-xs px-2.5 py-1 rounded-lg border ${
-                      q.correctOptions.includes(opt.label)
-                        ? 'bg-emerald-50 border-emerald-200 text-emerald-700 font-semibold'
-                        : 'bg-gray-50 border-gray-200 text-gray-600'
-                    }`}>
-                      {opt.label}: {opt.text}
-                    </span>
-                  ))}
+            <div key={q._id} className="bg-white border border-gray-200 rounded-xl p-4 flex flex-col sm:flex-row gap-4 sm:items-start shadow-sm hover:shadow transition-shadow">
+              <div className="flex gap-3 items-start flex-1 min-w-0 w-full">
+                <span className="text-gray-400 font-mono text-sm pt-0.5 w-5 text-right flex-shrink-0">{i + 1}.</span>
+                <div className="flex-1 min-w-0">
+                  <p className="font-medium text-gray-900 text-[15px] leading-relaxed">{q.text}</p>
+                  <div className="flex flex-col sm:flex-row sm:flex-wrap gap-2 mt-3">
+                    {q.options.map(opt => (
+                      <span key={opt.label} className={`text-xs px-3 py-1.5 rounded-lg border ${
+                        q.correctOptions.includes(opt.label)
+                          ? 'bg-emerald-50 border-emerald-200 text-emerald-700 font-semibold shadow-sm'
+                          : 'bg-gray-50 border-gray-200 text-gray-600'
+                      }`}>
+                        <strong className="mr-1">{opt.label}:</strong> {opt.text}
+                      </span>
+                    ))}
+                  </div>
                 </div>
               </div>
-              <div className="flex items-center gap-3 flex-shrink-0">
-                <span className={`px-2 py-0.5 text-xs rounded-md font-medium border ${
+              <div className="flex flex-wrap items-center gap-2 sm:gap-3 flex-shrink-0 ml-8 sm:ml-0 mt-1 sm:mt-0 w-full sm:w-auto">
+                <span className={`px-2 py-1 text-[11px] uppercase tracking-wider rounded-md font-bold border ${
                   q.type === 'single' ? 'bg-blue-50 border-blue-200 text-blue-700' : 'bg-purple-50 border-purple-200 text-purple-700'
                 }`}>{TYPE_BADGE[q.type]}</span>
-                <span className="text-xs text-gray-400 font-medium">{q.marks}pt</span>
-                <button onClick={() => openEdit(q)} className="text-xs px-3 py-1.5 border border-gray-200 bg-white text-gray-700 rounded-md hover:bg-gray-50 transition-colors">Edit</button>
-                <button onClick={() => handleDelete(q._id)} className="text-xs px-3 py-1.5 border border-red-200 bg-red-50 text-red-600 rounded-md hover:bg-red-100 hover:border-red-300 transition-colors">Delete</button>
+                <span className="text-xs text-gray-500 font-bold bg-gray-100 px-2 py-1 rounded-md">{q.marks} pt</span>
+                <button onClick={() => openEdit(q)} className="text-xs px-3 py-1.5 border border-gray-200 bg-white text-gray-700 font-medium rounded-md hover:bg-gray-50 transition-colors ml-auto sm:ml-0">Edit</button>
+                <button onClick={() => handleDelete(q._id)} className="text-xs px-3 py-1.5 border border-red-200 bg-red-50 text-red-600 font-medium rounded-md hover:bg-red-100 hover:border-red-300 transition-colors">Delete</button>
               </div>
             </div>
           ))}

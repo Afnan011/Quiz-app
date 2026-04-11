@@ -92,7 +92,7 @@ export default function ResultPage() {
             <p className={`text-sm font-bold tracking-widest uppercase mb-2 ${attempt.status === 'force_submitted' ? 'text-red-500' : 'text-gray-500'}`}>
               Final Score
             </p>
-            <div className={`text-7xl font-black mb-4 tracking-tighter ${attempt.status === 'force_submitted' ? 'text-red-600' : 'text-blue-600'}`}>
+            <div className={`text-6xl sm:text-7xl font-black mb-4 tracking-tighter ${attempt.status === 'force_submitted' ? 'text-red-600' : 'text-blue-600'}`}>
               {attempt.percentage}%
             </div>
             <p className={`text-sm font-medium px-5 py-2 rounded-lg border inline-block shadow-sm ${attempt.status === 'force_submitted' ? 'bg-white border-red-200 text-red-700' : 'bg-white border-blue-100 text-blue-700'}`}>
