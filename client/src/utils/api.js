@@ -1,7 +1,9 @@
 import axios from 'axios';
 
+const API_URL = import.meta.env.VITE_API_URL || '/api';
+
 const api = axios.create({
-  baseURL: '/api',
+  baseURL: API_URL,
   withCredentials: true, // Send httpOnly cookies
 });
 
@@ -18,7 +20,7 @@ api.interceptors.response.use(
     if (err.response?.status === 401 && !original._retry) {
       original._retry = true;
       try {
-        await axios.post('/api/auth/refresh', {}, { withCredentials: true });
+        await axios.post(`${API_URL}/auth/refresh`, {}, { withCredentials: true });
         return api(original);
       } catch {
         // Only redirect if not already on login page to avoid loops
