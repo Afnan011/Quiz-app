@@ -10,13 +10,22 @@ api.interceptors.response.use(
   (res) => res,
   async (err) => {
     const original = err.config;
+    // Skip interceptor if the failed request was a login or refresh request
+    if (original.url.includes('/auth/login') || original.url.includes('/auth/refresh')) {
+      return Promise.reject(err);
+    }
+
     if (err.response?.status === 401 && !original._retry) {
       original._retry = true;
       try {
         await axios.post('/api/auth/refresh', {}, { withCredentials: true });
         return api(original);
       } catch {
-        window.location.href = '/login';
+        // Only redirect if not already on login page to avoid loops
+        if (window.location.pathname !== '/login') {
+          window.location.href = '/login';
+        }
+        return Promise.reject(err);
       }
     }
     return Promise.reject(err);
