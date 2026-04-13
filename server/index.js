@@ -15,6 +15,7 @@ import questionRoutes from './routes/questions.js';
 dotenv.config();
 
 const app = express();
+app.set('trust proxy', 1);
 
 // Rate limiting on auth
 const limiter = rateLimit({

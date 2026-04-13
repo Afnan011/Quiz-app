@@ -66,17 +66,17 @@ export default function StudentsTab({ classData, onRefresh }) {
     const formData = new FormData();
     formData.append('file', file);
     try {
-      const { data } = await api.post(`/classes/${classData._id}/students/import`, formData, {
-        headers: { 'Content-Type': 'multipart/form-data' },
-      });
+      const { data } = await api.post(`/classes/${classData._id}/students/import`, formData);
+      // ↑ Do NOT set Content-Type manually — axios sets multipart/form-data + boundary automatically
       alert(`Import complete: ${data.created} created, ${data.skipped} skipped.`);
       fetchStudents();
-    } catch { alert('Import failed.'); }
+    } catch { alert('Import failed. Check the file format matches the template.'); }
     e.target.value = '';
   };
 
   const handleExport = () => {
-    window.open(`/api/classes/${classData._id}/students/export`, '_blank');
+    const base = import.meta.env.VITE_API_URL || '/api';
+    window.open(`${base}/classes/${classData._id}/students/export`, '_blank');
   };
 
   if (loading) return <div className="py-10 text-center text-slate-400">Loading students…</div>;
