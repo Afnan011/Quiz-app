@@ -176,16 +176,21 @@ router.post('/:classId/students/import', upload.single('file'), async (req, res)
     for (const row of rows) {
       const regNo = String(row['Registration Number'] || '').trim();
       const email = String(row['Email'] || '').trim().toLowerCase();
+      // Accept both 'Full Name' (template) and 'Name' (from exported file)
+      const name = String(row['Full Name'] || row['Name'] || '').trim();
+      // Use default password if column is absent (e.g. re-importing from export)
+      const password = String(row['Initial Password'] || row['Password'] || 'Password@123').trim();
+
       if (!regNo || !email) { results.skipped++; results.skippedEntries.push(row); continue; }
 
       const existing = await User.findOne({ $or: [{ email }, { registrationNumber: regNo }] });
       if (existing) { results.skipped++; results.skippedEntries.push({ regNo, reason: 'duplicate' }); continue; }
 
       const student = new User({
-        name: String(row['Full Name'] || '').trim(),
+        name,
         email,
         registrationNumber: regNo,
-        passwordHash: String(row['Initial Password'] || 'Password@123'),
+        passwordHash: password,
         role: 'student',
         classId: cls._id,
         isFirstLogin: true,
