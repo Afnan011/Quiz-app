@@ -48,15 +48,16 @@ router.post(
 
     try {
       const { email, password, registrationNumber } = req.body;
-      const user = await User.findOne({ email });
+      const user = await User.findOne({ email: email.toLowerCase().trim() });
 
       if (!user) return res.status(401).json({ message: 'Invalid credentials.' });
 
       const match = await user.comparePassword(password);
       if (!match) return res.status(401).json({ message: 'Invalid credentials.' });
 
-      // Student needs registrationNumber to match
-      if (user.role === 'student' && registrationNumber && user.registrationNumber !== registrationNumber) {
+      // Student needs registrationNumber to match (case-insensitive)
+      if (user.role === 'student' && registrationNumber &&
+          user.registrationNumber?.toLowerCase() !== registrationNumber.toLowerCase().trim()) {
         return res.status(401).json({ message: 'Invalid credentials.' });
       }
 
